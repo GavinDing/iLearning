@@ -14,7 +14,7 @@ class Address:
 
     def __init__(self):
         #do nothing
-        self.name = self.name
+        self.name  = self.name
     def __init__(self, name, email, phone, memo):
         self.name  = name
         self.email = email
@@ -22,7 +22,7 @@ class Address:
         self.memo  = memo
         
     def setName(self, name):
-            self.name = name
+        self.name = name
     def getName(self):
         return self.name
     def setEmail(self, email):
@@ -57,8 +57,9 @@ def writeToFile():
         exit(2)
     else:
         file.close()
+    return
 
-#load data from map to book
+#load data from file to map
 try:
     file = open(g_book, mode='rb')
 except FileNotFoundError:
@@ -69,6 +70,7 @@ else:
         g_map = p.load(file)
     except EOFError:
         file.close()
+        #when there's no data in the file, write author's data into it.
         writeToFile()
     else:
         file.close()
@@ -79,14 +81,37 @@ def dispHelpInfo():
     print('quit/exit    -- exit this program')
     print('showAll      -- show all address info')
     print('add          -- add a new address')
+    return
 
-#get user's command adn process it
+#display all items in the address book
+def showAll():
+    for item in g_map:
+        addr  = g_map[item]
+        if(not addr):
+            print('No addr for %s!' % item)
+            return
+        email = addr.getEmail()
+        phone = addr.getPhone()
+        memo  = addr.getMemo()
+        print('contact %s at: ' % item)
+        if(email):
+            print('    Email: %s' % email)
+        if(phone):
+            print('    Phone: %s' % phone)
+        if(memo):
+            print('    Memo : %s' % memo)
+    return
+
+#get user's command and process it
 cmd_quit = ('quit', 'q', 'Q', 'exit', '退出')
 cmd = input("CMD:")
 while cmd not in cmd_quit:
     if('help' == cmd):
         dispHelpInfo()
-    
+    if('showAll' == cmd):
+        showAll()
     #get the nexe command
     cmd = input("CMD:")
+else:
+    print('Thanks for using this program developed by gavin.')
     
