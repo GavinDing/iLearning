@@ -49,22 +49,26 @@ def writeToFile():
         file = open(g_book, mode='wb')
         p.dump(g_map, file)
     except FileNotFoundError:
-        print('please create %s.' % g_book)
-        exit(1)
+        return
     except:
-        print('write to file error.')
+        print('write to file error')
         file.close()
-        exit(2)
     else:
         file.close()
     return
 
+#welcome the user
+print('''*****************************************************''')
+print('''Welcome to gavin's software <address book>.''')
+print('''*****************************************************''')
+print('''-----------------------------------------------------''')
+print('''If you don't know what to do, just type 'help'.''')
+print('''-----------------------------------------------------''')
 #load data from file to map
 try:
     file = open(g_book, mode='rb')
 except FileNotFoundError:
-    print('please create %s.' % g_book)
-    exit(1)
+    print('''Now, you can add items to your address book.''')
 else:
     try:
         g_map = p.load(file)
@@ -79,8 +83,8 @@ else:
 def dispHelpInfo():
     print('help         -- show help info')
     print('quit/exit    -- exit this program')
-    print('showAll      -- show all address info')
-    print('query        -- get an item by name')
+    print('show/all     -- show all address info')
+    print('query/get    -- get an item by name')
     print('add          -- add a new address item')
     print('remove/rm    -- remove an item from address book')
     print('update/up    -- update an item in address book')
@@ -180,9 +184,9 @@ cmd = input("CMD:")
 while cmd not in cmd_quit:
     if('help' == cmd):
         dispHelpInfo()
-    if('showAll' == cmd):
+    if('show' == cmd  or 'all' == cmd):
         showAll()
-    if('query' == cmd):
+    if('query' == cmd or 'get' == cmd):
         query()
     if('add' == cmd):
         add()
@@ -194,5 +198,5 @@ while cmd not in cmd_quit:
     #get the nexe command
     cmd = input("CMD:")
 else:
-    print('Thanks for using this program developed by gavin.')
+    print('Thanks for using this software developed by gavin.')
     
